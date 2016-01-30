@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://level_data/tileset.png" type="Texture" id=1]
+
+
+
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 64, 64 )
+
+[sub_resource type="OccluderPolygon2D" id=2]
+
+closed = true
+cull_mode = 0
+polygon = Vector2Array( -64, -64, 64, -64, 64, 64, -64, 64 )
+
+[node name="tileset" type="Node2D"]
+
+__meta__ = { "__editor_plugin_screen__":"2D" }
+
+[node name="empty" type="Sprite" parent="."]
+
+transform/pos = Vector2( 64, 384 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 16, 16, 128, 128 )
+
+[node name="spike" type="Sprite" parent="."]
+
+transform/pos = Vector2( 64, 192 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 16, 208, 128, 128 )
+
+[node name="demilitarized_zone" type="Sprite" parent="."]
+
+transform/pos = Vector2( 64, 576 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 16, 400, 128, 128 )
+
+[node name="wall" type="Sprite" parent="."]
+
+transform/pos = Vector2( 256, 192 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 208, 16, 128, 128 )
+
+[node name="collision" type="StaticBody2D" parent="wall"]
+
+visibility/behind_parent = true
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 3
+collision/mask = 3
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="shape" type="CollisionShape2D" parent="wall/collision"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="occluder" type="LightOccluder2D" parent="wall"]
+
+visibility/behind_parent = true
+occluder = SubResource( 2 )
+light_mask = 1
+
+[node name="exit" type="Sprite" parent="."]
+
+transform/pos = Vector2( 256, 384 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 400, 16, 128, 128 )
+
+[node name="fadeout_side" type="Sprite" parent="."]
+
+transform/pos = Vector2( 448, 384 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 400, 208, 128, 128 )
+
+[node name="fadeout_inner_corner" type="Sprite" parent="."]
+
+transform/pos = Vector2( 448, 192 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 400, 400, 128, 128 )
+
+[node name="fadeout_outer_corner" type="Sprite" parent="."]
+
+transform/pos = Vector2( 448, 576 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 208, 400, 128, 128 )
+
+

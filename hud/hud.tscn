@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://hud/hud.gd" type="Script" id=1]
+[ext_resource path="res://hud/heart_empty.png" type="Texture" id=2]
+[ext_resource path="res://hud/heart_full.png" type="Texture" id=3]
+[ext_resource path="res://hud/star.png" type="Texture" id=4]
+[ext_resource path="res://shared/aileron_large.fnt" type="Font" id=5]
+
+[node name="hud" type="VBoxContainer"]
+
+margin/right = 255.0
+margin/bottom = 104.0
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+alignment = 0
+script/script = ExtResource( 1 )
+__meta__ = { "__editor_plugin_screen__":"Script" }
+player_path = null
+
+[node name="health" type="Control" parent="."]
+
+margin/right = 255.0
+margin/bottom = 50.0
+rect/min_size = Vector2( 0, 50 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+
+[node name="empty" type="Sprite" parent="health"]
+
+transform/scale = Vector2( 0.78125, 0.78125 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="full" type="Sprite" parent="health"]
+
+transform/scale = Vector2( 0.78125, 0.78125 )
+texture = ExtResource( 3 )
+centered = false
+region = true
+region_rect = Rect2( 0, 0, 320, 64 )
+
+[node name="stars" type="Control" parent="."]
+
+margin/top = 54.0
+margin/right = 255.0
+margin/bottom = 104.0
+rect/min_size = Vector2( 0, 50 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+
+[node name="texture" type="TextureFrame" parent="stars"]
+
+anchor/bottom = 1
+margin/right = 50.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+texture = ExtResource( 4 )
+expand = true
+
+[node name="label" type="Label" parent="stars"]
+
+anchor/right = 1
+anchor/bottom = 1
+margin/left = 64.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+custom_fonts/font = ExtResource( 5 )
+text = "x 5"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+
