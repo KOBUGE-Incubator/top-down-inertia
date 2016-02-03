@@ -25,12 +25,20 @@ var tilemap
 var last_checkpoint
 var animation_player
 var resource_manager
+var save_manager
 
 var movement_actions = {
-	up = Vector2(0, -1),
-	down = Vector2(0, 1),
-	left = Vector2(-1, 0),
-	right = Vector2(1, 0)
+	move_up = Vector2(0, -1),
+	move_down = Vector2(0, 1),
+	move_left = Vector2(-1, 0),
+	move_right = Vector2(1, 0)
+}
+
+var shooting_actions = {
+	shoot_up = Vector2(0, -1),
+	shoot_down = Vector2(0, 1),
+	shoot_left = Vector2(-1, 0),
+	shoot_right = Vector2(1, 0)
 }
 
 var special_tiles = {
@@ -42,6 +50,7 @@ var special_tiles = {
 func _ready():
 	animation_player = get_node("animation_player")
 	resource_manager = get_node("/root/resource_manager")
+	save_manager = get_node("/root/save_manager")
 	
 	animation_player.connect("finished", self, "animation_player_finish")
 	
@@ -66,8 +75,15 @@ func _fixed_process(delta):
 		if Input.is_action_pressed(action):
 			move += movement_actions[action]
 	
-	if Input.is_action_pressed("shoot"):
-		shoot()
+	var shoot_direction = Vector2(0, 0)
+	for action in shooting_actions:
+		if Input.is_action_pressed(action):
+			shoot_direction += shooting_actions[action]
+	
+	if Input.is_action_pressed("shoot_mouse") and save_manager.config.has('shoot_with_mouse') and save_manager.config['shoot_with_mouse']:
+		shoot(mouse_pos.normalized())
+	elif shoot_direction.length_squared() > 0.1:
+		shoot(shoot_direction.normalized())
 	
 	save = false
 	
@@ -111,10 +127,9 @@ func _input(event):
 	if event.is_action("show_dbg") && !event.is_echo() && event.is_pressed():
 		get_node("camera").set_zoom(Vector2(8,8))
 
-func shoot():
+func shoot(direction):
 	if time - last_shot > 0.1 and !save:
 		var new_bullet = bullet_scene.instance()
-		var direction = (mouse_pos).normalized()
 		var velocity = direction*new_bullet.speed*rand_range(1,1.5)
 		
 		new_bullet.set_pos(get_pos() + direction*bullet_offset)
