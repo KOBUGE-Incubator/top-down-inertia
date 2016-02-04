@@ -1,11 +1,17 @@
 
 extends Node2D
 
+signal logic_changed(key, value)
+signal logic_color_changed(key, color)
+
 var spawn
 var level = 1
 
 var resource_manager
 var save_manager
+
+var logic_active = {}
+var logic_colors = {}
 
 func _ready():
 	resource_manager = get_node("/root/resource_manager")
@@ -14,6 +20,44 @@ func _ready():
 	resource_manager.connect("amount_changed", self, "resource_amount_changed")
 	
 	load_level(save_manager.level)
+
+func register_logic(key, color):
+	if !logic_active.has(key):
+		logic_active[key] = 0
+		emit_signal("logic_changed", key, false)
+	if color.a > 0.1 and !logic_colors.has(key):
+		logic_colors[key] = color
+		emit_signal("logic_color_changed", key, color)
+
+func is_logic_active(key):
+	if logic_active.has(key):
+		return logic_active[key] > 0
+	else:
+		return false
+
+func get_logic_color(key):
+	if logic_colors.has(key):
+		return logic_colors[key]
+	else:
+		return Color(0, 0, 0, 1)
+
+func set_logic_active(key, value):
+	value = bool(value)
+	
+	var was_active = is_logic_active(key)
+	
+	if !logic_active.has(key):
+		logic_active[key] = 0
+	
+	if value:
+		logic_active[key] += 1
+	elif logic_active[key] > 0:
+		logic_active[key] -= 1
+		
+	var is_active = is_logic_active(key)
+	
+	if was_active != is_active:
+		emit_signal("logic_changed", key, is_active)
 
 func load_level(var l):
 	var holder = get_node("level_holder")
@@ -25,6 +69,9 @@ func load_level(var l):
 	
 	var level = load(str("res://levels/", "level_test", ".tscn")).instance()
 	holder.add_child(level)
+	
+	logic_active = {}
+	logic_colors = {}
 	
 	player.tilemap = level
 	player.set_checkpoint(level.get_node("spawn"))

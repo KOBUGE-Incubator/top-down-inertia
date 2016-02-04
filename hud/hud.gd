@@ -23,7 +23,7 @@ func _ready():
 	player.connect("health_changed", self, "update_values")
 	resource_manager.connect("amount_changed", self, "update_values")
 
-func update_values():
+func update_values(discard=null):
 	var health_percent = player.health / player.start_health
 	health_full.set_region_rect(Rect2(health_full_initial_region.pos, health_full_initial_region.size * Vector2(health_percent,1)))
 	

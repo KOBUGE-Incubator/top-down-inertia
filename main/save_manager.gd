@@ -33,6 +33,7 @@ func _ready():
 
 func _notification(what):
 	if (what==MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		resource_manager.restart_amounts("stars")
 		save_game()
 		get_tree().quit()
 
@@ -70,6 +71,7 @@ func load_game():
 	f.close()
 	
 	resource_manager.set_resource_amount("stars", stars)
+	resource_manager.fix_amounts("stars")
 
 func save_game():
 	var stars = resource_manager.get_resource_amount("stars")

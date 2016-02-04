@@ -52,6 +52,7 @@ tracks/2/keys = { "cont":false, "times":FloatArray( 0, 0.2 ), "transitions":Floa
 
 [node name="player" type="RigidBody2D"]
 
+z/z = 1
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -0.880249, 0.44014 )

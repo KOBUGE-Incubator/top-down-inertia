@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://logic_object/button.gd" type="Script" id=1]
+[ext_resource path="res://logic_object/button.png" type="Texture" id=2]
+[ext_resource path="res://logic_object/button_color.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 54, 54 )
+
+[node name="button" type="Area2D"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+__meta__ = { "__editor_plugin_screen__":"Script" }
+key = "default"
+color = Color( 1, 1, 1, 1 )
+depress_timeout = 1.0
+only_player = true
+
+[node name="sprite" type="Sprite" parent="."]
+
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="color" type="Sprite" parent="."]
+
+texture = ExtResource( 3 )
+hframes = 2
+modulate = Color( 0.123688, 0.251701, 0.753906, 1 )
+
+[node name="shape" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+

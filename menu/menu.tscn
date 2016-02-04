@@ -52,7 +52,7 @@ size_flags/vertical = 2
 theme/theme = SubResource( 1 )
 alignment = 0
 script/script = ExtResource( 2 )
-__meta__ = { "__editor_plugin_screen__":"2D" }
+__meta__ = { "__editor_plugin_screen__":"Script" }
 
 [node name="__space" type="Control" parent="."]
 

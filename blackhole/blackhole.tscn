@@ -14,9 +14,10 @@ colors = ColorArray( 1, 1, 1, 0, 1, 1, 1, 0.507715, 1, 1, 1, 0 )
 
 [node name="blackhole" type="Area2D"]
 
+z/z = 1
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, -0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 space_override = 1
 gravity_point = true

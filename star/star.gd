@@ -1,8 +1,9 @@
 
 extends Area2D
 
+const player_class = preload("res://player/player.gd")
+
 export var worth = 1
-var player_class = preload("res://player/player.gd")
 var taken = false
 var animation_player
 
